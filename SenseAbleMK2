@@ -1,0 +1,205 @@
+const int trig_pin1 = 3;
+const int echo_pin1 = 2;
+
+const int trig_pin2 = 11;
+const int echo_pin2 = 10;
+
+const int trig_pin3 = 13;
+const int echo_pin3 = 12;
+
+#define trig_pin4 A0
+#define echo_pin4 A1
+
+#define  trig_pin5 A2
+#define echo_pin5 A3
+
+#define trig_pin6 A4
+#define echo_pin6 A5
+
+long duration1;
+int distance1;
+
+long duration2;
+int distance2;
+
+long duration3;
+int distance3;
+
+long duration4;
+int distance4;
+
+long duration5;
+int distance5;
+
+long duration6;
+int distance6;
+
+bool verbose = false;
+
+void setup()
+{
+  pinMode(trig_pin1, OUTPUT);
+  pinMode(echo_pin1, INPUT);
+  pinMode(7, OUTPUT);
+  
+  pinMode(trig_pin2, OUTPUT);
+  pinMode(echo_pin2, INPUT);
+  pinMode(6, OUTPUT);
+  
+  pinMode(trig_pin3, OUTPUT);
+  pinMode(echo_pin3, INPUT);
+  pinMode(5, OUTPUT);
+  
+  pinMode(trig_pin4, OUTPUT);
+  pinMode(echo_pin4, INPUT);
+  pinMode(4, OUTPUT);
+  
+  pinMode(trig_pin5, OUTPUT);
+  pinMode(echo_pin5, INPUT);
+  pinMode(3, OUTPUT);
+  
+  pinMode(trig_pin6, OUTPUT);
+  pinMode(echo_pin6, INPUT);
+  pinMode(2, OUTPUT);
+  
+ Serial.begin(9600);
+}
+
+void loop()
+{  
+  
+  // Sets the trigPin on HIGH state for 10 micro seconds
+  digitalWrite(trig_pin1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig_pin1, LOW);
+  
+  duration1 = pulseIn(echo_pin1, HIGH);
+  Serial.print("1");
+  Serial.print(duration1);
+  Serial.print(" ");
+  delay(10);
+
+  digitalWrite(trig_pin2, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig_pin2, LOW);
+  
+  duration2 = pulseIn(echo_pin2, HIGH);
+
+  Serial.print("2");
+  Serial.print(duration2);
+  Serial.print(" ");
+  delay(10);
+  
+  digitalWrite(trig_pin3, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig_pin3, LOW);
+  
+  duration3 = pulseIn(echo_pin3, HIGH);
+
+  Serial.print("3");
+  Serial.print(duration3);
+  Serial.print(" ");
+  delay(10);
+  
+  digitalWrite(trig_pin4, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig_pin4, LOW);
+  
+  duration4 = pulseIn(echo_pin4, HIGH);
+
+  Serial.print("4");
+  Serial.print(duration4);
+  Serial.print(" ");
+  delay(10);
+
+  digitalWrite(trig_pin5, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig_pin5, LOW);
+  
+  duration5 = pulseIn(echo_pin5, HIGH);
+
+  Serial.print("5");
+  Serial.print(duration5);
+  Serial.print(" ");
+  delay(10);
+  
+  digitalWrite(trig_pin6, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig_pin6, LOW);
+  
+  duration6 = pulseIn(echo_pin6, HIGH);
+
+  Serial.print("6");
+  Serial.println(duration6);
+  Serial.print(" ");
+  delay(10);
+
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+// Calculating the distance
+  distance1 = duration1*0.034/2;
+  distance2 = duration2*0.034/2;
+  distance3 = duration3*0.034/2;
+  distance4 = duration4*0.034/2;
+  distance5 = duration5*0.034/2;
+  distance6 = duration6*0.034/2;
+
+    
+  if (verbose)
+  {
+  	Serial.print("\t");
+  	Serial.print("Distance1: ");
+  	Serial.print(distance1);
+  	Serial.print("\t");
+    
+    Serial.print("\t");
+  	Serial.print("Distance2: ");
+  	Serial.print(distance2);
+  	Serial.print("\t");
+    
+    Serial.print("\t");
+  	Serial.print("Distance3: ");
+  	Serial.print(distance3);
+  	Serial.print("\t");
+    
+    Serial.print("\t");
+  	Serial.print("Distance4: ");
+  	Serial.print(distance4);
+  	Serial.print("\t");
+    
+    Serial.print("\t");
+  	Serial.print("Distance5: ");
+  	Serial.print(distance5);
+  	Serial.print("\t");
+    
+    Serial.print("\t");
+  	Serial.print("Distance6: ");
+  	Serial.print(distance6);
+  	Serial.print("\t");
+  }
+
+  int output1 = map(distance1, 336.2, 10, 0, 254);
+  int timeDelay1 = map(distance1, 336.2, 10, 1000, 100);
+  analogWrite(7, output1);
+
+  int output2 = map(distance2, 336.2, 10, 0, 254);
+  int timeDelay2 = map(distance2, 336.2, 10, 1000, 100);
+  analogWrite(6, output2);
+
+  int output3 = map(distance3, 336.2, 10, 0, 254);
+  int timeDelay3 = map(distance3, 336.2, 10, 1000, 100);
+  analogWrite(5, output3);
+
+  int output4 = map(distance4, 336.2, 10, 0, 254);
+  int timeDelay4 = map(distance4, 336.2, 10, 1000, 100);
+  analogWrite(4, output4);
+
+  int output5 = map(distance5, 336.2, 10, 0, 254);
+  int timeDelay5 = map(distance5, 336.2, 10, 1000, 100);
+  analogWrite(3, output5);
+
+  int output6 = map(distance6, 336.2, 10, 0, 254);
+  int timeDelay6 = map(distance6, 336.2, 10, 1000, 100);
+  analogWrite(2, output6);
+  delay(1000);
+  
+}
