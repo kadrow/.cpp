@@ -1,0 +1,83 @@
+const int trig_pin1 = 13;
+const int echo_pin1 = 12;
+const int trig_pin2 = 9;
+const int echo_pin2 = 8;
+
+long duration1;
+int distance1;
+long duration2;
+int distance2;
+
+bool verbose = true;
+
+void setup()
+{
+  pinMode(trig_pin1, OUTPUT);
+  pinMode(echo_pin1, INPUT);
+  pinMode(3, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(trig_pin2, OUTPUT);
+  pinMode(echo_pin2, INPUT);
+  
+  pinMode(4,INPUT_PULLUP);
+  Serial.begin(9600);
+}
+
+void loop()
+{  
+ int val = digitalRead(4);
+  //{
+  
+  //digitalWrite(3, LOW);
+  //digitalWrite(5, LOW);
+  //delayMicroseconds(2);
+  //}
+  
+  // Sets the trigPin on HIGH state for 10 micro seconds
+  digitalWrite(trig_pin1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig_pin1, LOW);
+  
+  duration1 = pulseIn(echo_pin1, HIGH);
+
+  delay(10);
+  
+    // Sets the trigPin on HIGH state for 10 micro seconds
+  digitalWrite(trig_pin2, LOW);
+  digitalWrite(trig_pin2, HIGH);
+  delayMicroseconds(10);
+  
+  digitalWrite(trig_pin2, LOW);
+  duration2 = pulseIn(echo_pin2, HIGH);
+
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+// Calculating the distance
+  int distance1 = duration1*0.034/2;
+
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+// Calculating the distance
+  int distance2 = duration2*0.034/2;
+    
+  if (verbose)
+  {
+  	Serial.print("Button: ");
+  	Serial.print(val);
+  	Serial.print("\t");
+  	Serial.print("Distance1: ");
+  	Serial.print(distance1);
+  	Serial.print("\t");
+  	Serial.print("Distance2: ");
+  	Serial.println(distance2);
+  }
+
+  int output1 = map(distance1, 336.2, 10, 0, 254);
+  int output2 = map(distance2, 336.2, 10, 0, 254);
+  int timeDelay1 = map(distance1, 336.2, 10, 1000, 100);
+  int timeDelay2 = map(distance2, 336.2, 10, 1000, 100);
+
+   analogWrite(3, output1);
+   analogWrite(5, output2);
+
+  
+  
+}
