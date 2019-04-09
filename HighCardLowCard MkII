@@ -1,0 +1,108 @@
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+
+int main()
+{
+    int restart;
+    restart = 1;
+    while (restart == 1)
+        {
+            cout << "Welcome to BlackJack, higher = h and lower = l" << endl;
+
+            int cardValue;
+            char answer;
+            int score;
+            char retry;
+            int restart;
+            int gameNumber;
+            gameNumber = 0;
+            score = 0;
+            int again;
+            again = 1;
+            int guess;
+            guess = 0;
+            int cardValue2;
+            //cardValue = rand() % 13 + 1;
+
+            cardValue = rand() % 13 + 1;
+            while (again == 1)
+                {
+                    cout <<"Card is "<<cardValue<< ", (h/l)?"<<endl;
+                    cin >>answer;
+
+            if (answer == 'h')
+                {
+                   // cardValue = cardValue2;
+                    cardValue2 = rand() % 13 + 1;
+                    cout <<"New card is "<<cardValue2<<endl;
+                    //guess = cardValue + 1;
+                    if (cardValue2 > cardValue|| cardValue2 == cardValue )
+                        {
+                            cout<<"correct"<<endl;
+                            cardValue = cardValue2;
+                            score = score + 1;
+                            again = 1;
+                            //gameNumber = gameNumber + 1;
+                        }
+
+                    if (cardValue2 < cardValue)// || cardValue2 != cardValue )
+                    {
+                        cout << "Not so slick, chief. You got "<<score<<" correct!"<<endl;
+                        gameNumber = gameNumber + 1;
+                        score = 0;
+                        cout<<"Wanna try again? (y/n)?"<<endl;
+                        cin>>retry;
+                        if (retry == 'y')
+                        {
+                            cardValue = rand() % 13 + 1;
+                            restart = 1;
+                        }
+                        if (retry == 'n')
+                        {
+                            cout<<"You played "<<gameNumber<<" games"<<endl;
+                            restart = 0;
+                            return 0;
+                        }
+                    }
+                }
+            if (answer == 'l')
+                {
+                    //cardValue = cardValue2;
+                    cardValue2 = rand() % 13 + 1;
+                    cout <<"New card is "<<cardValue2<<endl;
+                    //guess = cardValue - 1;
+                    if (cardValue <= cardValue2)// || cardValue2 == cardValue )
+                        {
+                            cout<<"correct"<<endl;
+                            score = score + 1;
+                            cardValue = cardValue2;
+                            again = 1;
+                            //gameNumber = gameNumber + 1;
+                        }
+                    if (cardValue > cardValue2)// || (guess - 1) != cardValue )
+                        {
+                            cout << "Not so slick, chief. You got "<<score<<" correct!"<<endl;
+                            gameNumber = gameNumber + 1;
+                            score=0;
+                            cout<<"Wanna try again? (y/n)?"<<endl;
+                            cin>>retry;
+                            if (retry == 'y')
+                            {
+                                restart = 1;
+                            }
+                            if (retry == 'n')
+                            {
+                                cout<<"You played "<<gameNumber<<" games"<<endl;
+                                restart = 0;
+                                return 0;
+                            }
+                        }
+                }
+
+                }
+        }
+            return 0;
+}
