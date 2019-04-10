@@ -1,0 +1,104 @@
+const int trig_pin1 = 12;
+const int echo_pin1 = 13;
+const int trig_pin2 = 7;
+const int echo_pin2 = 8;
+const int trig_pin3 = 2;
+const int echo_pin3 = 4;
+
+long duration1;
+int distance1;
+long duration2;
+int distance2;
+long duration3;
+int distance3;
+
+bool verbose = true;
+
+void setup()
+{
+  pinMode(6, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(3, OUTPUT);
+  pinMode(trig_pin1, OUTPUT);
+  pinMode(echo_pin1, INPUT);
+  pinMode(trig_pin2, OUTPUT);
+  pinMode(echo_pin2, INPUT);
+  pinMode(trig_pin3, OUTPUT);
+  pinMode(echo_pin3, INPUT);
+  
+  pinMode(4,INPUT_PULLUP);
+  Serial.begin(9600);
+}
+
+void loop()
+{  
+  
+  // Sets the trigPin on HIGH state for 10 micro seconds
+  
+  digitalWrite(trig_pin1, LOW);
+  digitalWrite(trig_pin1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig_pin1, LOW);
+  
+  duration1 = pulseIn(echo_pin1, HIGH);
+
+  delay(10);
+  
+  // Sets the trigPin on HIGH state for 10 micro seconds
+  digitalWrite(trig_pin2, LOW);
+  digitalWrite(trig_pin2, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig_pin2, LOW);
+  duration2 = pulseIn(echo_pin2, HIGH);
+
+  delay(10);
+  digitalWrite(trig_pin3, LOW);
+  digitalWrite(trig_pin3, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig_pin3, LOW);
+  duration3 = pulseIn(echo_pin3, HIGH);
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+  // Calculating the distance
+  int distance1 = duration1*0.017;
+
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+  // Calculating the distance
+  int distance2 = duration2*0.017;
+  int distance3 = duration3*0.017;
+  
+  if (distance1 > 50) 
+  {
+    distance1 = 60;
+  }
+  
+  if (distance2 > 60) 
+  {
+    distance2 = 60;
+  }
+  
+  if (distance3 > 60) 
+  {
+    distance3 = 60;
+  }
+  
+  if (verbose)
+  {
+//    Serial.print("Distance1: ");
+    Serial.print(distance1);
+    Serial.print("\t");
+//   Serial.print("Distance2: ");
+    Serial.print(distance2);
+    Serial.print("\t");
+//  Serial.print("Distance3: ");
+    Serial.println(distance3);
+    Serial.print("\t");
+  }
+  
+  int output1 = map(distance1, 60, 0, 0, 150);
+  int output2 = map(distance2, 60, 0, 0, 150);
+  int output3 = map(distance3, 60, 0, 0, 150); //max =  254
+  
+  analogWrite(6, output1);
+  analogWrite(5, output2);  
+  analogWrite(3, output3);  
+}
